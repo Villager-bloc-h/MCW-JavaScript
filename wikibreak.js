@@ -1,4 +1,5 @@
 /*** BEGIN WIKIBREAK ENFORCER ***/
+/*** from https://en.wikipedia.org/wiki/Wikipedia:BREAKENF ***/
 $(document).ready(function() 
 {
 
