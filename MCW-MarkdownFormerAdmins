@@ -1,0 +1,37 @@
+/* 高亮前管理团队成员 */
+/* patrollers */
+.mw-userlink[title="User:AgentKitchenSink"]::before,
+.mw-userlink[title="User:KaplanSteve"]::before,
+.mw-userlink[title="User:Dianliang233"]::before,
+.mw-userlink[title="User:Lakejason0"]::before,
+.mw-userlink[title="User:Leisurelyxiaohui"]::before,
+.mw-userlink[title="User:Siiftun1857"]::before,
+.mw-userlink[title="User:SkyEye FAST"]::before,
+.mw-userlink[title="User:Snow dash"]::before,
+.mw-userlink[title="User:SteveZihang"]::before,
+.mw-userlink[title="User:Vbs3367"]::before,
+.mw-userlink[title="User:WDLJT"]::before,
+.mw-userlink[title="User:海绵couna"]::before,
+.mw-userlink[title="User:BoredYukolin"]::before,
+.mw-userlink[title="User:Villager-bloc-h"]::before,
+/* administrator */
+.mw-userlink[title="User:Anterdc99"]::before,
+.mw-userlink[title="User:Hzy980512"]::before,
+.mw-userlink[title="User:RealCuervo"]::before,
+.mw-userlink[title="User:Sjjklh"]::before,
+.mw-userlink[title="User:SnowFireWolf"]::before,
+.mw-userlink[title="User:135ty"]::before,
+/* bureaucrat */
+.mw-userlink[title="User:Craft Lawrence"]::before,
+.mw-userlink[title="User:Edenapple14@legacy41778520"]::before,
+.mw-userlink[title="User:Powup333"]::before,
+.mw-userlink[title="User:Lxazl5770"]::before,
+.mw-userlink[title="User:Ff98sha"]::before{
+	content: "";
+	background: url(filepath://ItemSprite banner-pattern-revision-1.png) no-repeat center/16px;
+	vertical-align: text-top;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 2px;
+}
