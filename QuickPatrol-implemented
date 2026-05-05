@@ -1,0 +1,120 @@
+(function() {
+    'use strict';
+
+    const BUTTON_TEXT = '✓ 巡查';
+    let isProcessing = false;
+
+    function addPatrolButtonToLine(line) {
+        if (line.hasAttribute('data-patrol-btn-added')) {
+            return;
+        }
+
+        const patrolLinkSpan = line.querySelector('.patrollink, .mw-patrollink');
+        if (!patrolLinkSpan) {
+            return;
+        }
+
+        const originalLink = patrolLinkSpan.querySelector('a');
+        if (!originalLink) {
+            return;
+        }
+
+        const patrolUrl = originalLink.href;
+        if (!patrolUrl) {
+            return;
+        }
+
+        const newButton = document.createElement('a');
+        newButton.href = patrolUrl;
+        newButton.textContent = BUTTON_TEXT;
+        newButton.className = 'direct-patrol-btn';
+        newButton.title = '标记为已巡查';
+        newButton.style.cssText = `
+            display: inline-block;
+            background-color: #4caf50;
+            border: 1px solid #45a049;
+            border-radius: 3px;
+            padding: 2px 8px;
+            margin-left: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        `;
+
+        newButton.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#45a049';
+            this.style.transform = 'scale(1.02)';
+        });
+        newButton.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '#4caf50';
+            this.style.transform = 'scale(1)';
+        });
+
+        newButton.addEventListener('click', function(e) {
+            this.style.backgroundColor = '#ccc';
+            this.style.cursor = 'wait';
+            this.textContent = '✓ 已巡查';
+        });
+
+        const lineContent = line.querySelector('.mw-changeslist-line') || line;
+        lineContent.appendChild(newButton);
+
+        line.setAttribute('data-patrol-btn-added', 'true');
+    }
+
+    function addButtonsToAllLines() {
+        if (isProcessing) return;
+        isProcessing = true;
+
+        const changeLines = document.querySelectorAll(
+            '#mw-content-text .mw-changeslist-line, ' +
+            '#mw-content-text li, ' +
+            '.mw-changeslist-line-*'
+        );
+
+        changeLines.forEach(line => {
+            if (line.querySelector('.patrollink, .mw-patrollink')) {
+                addPatrolButtonToLine(line);
+            }
+        });
+
+        isProcessing = false;
+    }
+
+    function observeDOMChanges() {
+        const observer = new MutationObserver(function(mutations) {
+            let shouldScan = false;
+            for (const mutation of mutations) {
+                if (mutation.addedNodes.length > 0) {
+                    shouldScan = true;
+                    break;
+                }
+            }
+            if (shouldScan) {
+                setTimeout(addButtonsToAllLines, 200);
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            addButtonsToAllLines();
+            observeDOMChanges();
+        });
+    } else {
+        addButtonsToAllLines();
+        observeDOMChanges();
+    }
+
+    setInterval(function() {
+        addButtonsToAllLines();
+    }, 3000);
+})();
